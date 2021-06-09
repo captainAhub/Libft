@@ -1,81 +1,100 @@
 #include "libft.h"
-#include <stdio.h>
-#include <string.h>
 
-bool	is_char_in_string(char c, char *set)
+int	ft_count(const char *str, char c)
 {
-	while (true)
+	int		num;
+	int		i;
+	bool	word;
+
+	num = 0;
+	word = false;
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (*set == '\0')
-			return (c == '\0');
-		if (*set == c)
-			return (true);
-		set++;
+		if (str[i] == c)
+		{
+			i++;
+			word = false;
+		}
+		else
+		{	
+			if (!word)
+			{
+				word = true;
+				num++;
+			}
+			i++;
+		}
 	}
-	return (false);
+	return (num);
 }
 
-int	count(char *str, char *charset)
+char	*ft_getword(const char *s, char c)
 {
-	int		count;
-	char	*prev;
-	char	*next;
+	size_t	length;
+	char	*str;
 
-	count = 0;
-	prev = str;
-	next = str;
-	while (true)
+	length = 0;
+	while (s[length] != '\0' && s[length] != c)
+		length++;
+	str = ft_substr(s, 0, length);
+	if (str)
+		return (str);
+	return (NULL);
+}
+
+static void	ft_skip(char **s, char c)
+{
+	while (**s == c)
+		*s = *s + 1;
+}
+
+void	ft_nextword(char **table, char c)
+{
+	char	*str;
+	int		between;
+
+	str = *table;
+	between = 0;
+	while (*str)
 	{
-		if (is_char_in_string(*str, charset))
-			next = str;
-		if (next - prev > 1)
-			count++;
-		if (*str == '\0')
-			break ;
-		prev = next;
+		if (*str == c)
+			between = 1;
+		else if (*str != c && between == 1)
+			return ;
+		*table = *table + 1;
 		str++;
 	}
-	return (count);
-}
-
-int	add_part(char **entry, char *previous, int size, char *charset)
-{
-	if (is_char_in_string(previous[0], charset))
-	{
-		previous++;
-		size--;
-	}
-	*entry = (char *)malloc((size + 3) * sizeof(char));
-	ft_strlcpy(*entry, previous, size);
-	(*entry)[size] = '\0';
-	(*entry)[size + 1] = '\0';
-	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
+	int		num;
+	char	**words;
+	char	*aux;
 	int		i;
-	int		size;
-	char	*prev;
-	char	*next;
-	char	**array;
 
-	array = (char **)malloc((count(s, c) + 1) * sizeof(char *));
-	i = 0;
-	prev = s;
-	next = s;
-	size = next - prev;
-	while (true)
+	if (s)
 	{
-		if (is_char_in_string(*s, c))
-			next = s;
-		if (size > 1)
-			i = i + add_part(&array[i], prev, size, c);
-		if (*s == '\0')
-			break ;
-		prev = next;
-		s++;
+		num = ft_count(s, c);
+		words = (char **)malloc(sizeof(char *) * (num + 1));
+		aux = ft_strdup(s);
+		if (words)
+		{
+			if (aux)
+			{
+				i = 0;
+				while (i < num)
+				{
+					ft_skip(&aux, c);
+					words[i++] = ft_getword(aux, c);
+					if (words[i++])
+						ft_nextword(&aux, c);
+				}
+				words[i] = NULL;
+				return (words);
+			}
+		}
 	}
-	array[i] = 0;
-	return (array);
+	return (NULL);
 }
