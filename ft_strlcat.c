@@ -22,7 +22,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	if (dest_size > size)
 		dest_size = size;
 	if (dest_size == size || size == 0)
-		return (src_size + dest_size);
+		return (src_size + size);
 	if (src_size < size - dest_size)
 		ft_memcpy(dest + dest_size, src, src_size + 1);
 	else

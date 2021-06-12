@@ -46,7 +46,7 @@ char	*ft_getword(const char *s, char c)
 static void	ft_skip(char **s, char c)
 {
 	while (**s == c)
-		*s = *s + 1;
+		*s += 1;
 }
 
 void	ft_nextword(char **table, char c)
@@ -78,18 +78,19 @@ char	**ft_split(char const *s, char c)
 	{
 		num = ft_count(s, c);
 		words = (char **)malloc(sizeof(char *) * (num + 1));
-		aux = ft_strdup(s);
 		if (words)
 		{
+			aux = ft_strdup(s);
 			if (aux)
 			{
 				i = 0;
 				while (i < num)
 				{
 					ft_skip(&aux, c);
-					words[i++] = ft_getword(aux, c);
-					if (words[i++])
+					words[i] = ft_getword(aux, c);
+					if (words[i])
 						ft_nextword(&aux, c);
+					i++;
 				}
 				words[i] = NULL;
 				return (words);
