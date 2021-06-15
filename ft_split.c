@@ -78,23 +78,19 @@ char	**ft_split(char const *s, char c)
 	{
 		num = ft_count(s, c);
 		words = (char **)malloc(sizeof(char *) * (num + 1));
-		if (words)
+		aux = ft_strdup(s);
+		if (words && aux)
 		{
-			aux = ft_strdup(s);
-			if (aux)
+			i = -1;
+			while (++i < num)
 			{
-				i = 0;
-				while (i < num)
-				{
-					ft_skip(&aux, c);
-					words[i] = ft_getword(aux, c);
-					if (words[i])
-						ft_nextword(&aux, c);
-					i++;
-				}
-				words[i] = NULL;
-				return (words);
+				ft_skip(&aux, c);
+				words[i] = ft_getword(aux, c);
+				if (words[i])
+					ft_nextword(&aux, c);
 			}
+			words[i] = NULL;
+			return (words);
 		}
 	}
 	return (NULL);
