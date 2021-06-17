@@ -17,7 +17,7 @@ RM        = rm -f
 CFLAGS      = -Wall -Wextra -Werror -I.
 NAME      = libft.a
 all:      $(NAME)
-bonus:    $(OBJ) $(BONUSOBJ) $(INCLUDE)
+bonus:    $(OBJS) $(BONUSOBJ) $(INCLUDE)
 	    ar rcs $(LIB) $(NAME) $(BONUSOBJ) $(OBJ)
 $(NAME):    $(OBJS)
 		ar rcs $(NAME) $(OBJS)
