@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	is_white_space(const char *str)
+static int	is_white_space(const char *str)
 {
 	int	i;
 
@@ -23,7 +23,7 @@ int	is_white_space(const char *str)
 	return (i);
 }
 
-int	final_result(unsigned long long num, int np)
+static int	final_result(unsigned long long num, int np)
 {
 	unsigned long long	i;
 

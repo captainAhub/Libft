@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-size_t	itoa_size(long n)
+static size_t	itoa_size(long n)
 {
 	size_t	size;
 
