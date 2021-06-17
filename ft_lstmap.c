@@ -6,11 +6,13 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	  t_list	*new;
 	  t_list	*old;
 
+	if (!lst)
+		return (NULL);
 	new_list = ft_lstnew((*f)(lst -> content));
+	if (!new_list)
+		return (NULL);
 	new = new_list;
 	old = lst -> next;
-	if (!lst || !new_list || !new)
-		return (NULL);
 	while (1)
 	{
 		if (old == NULL)

@@ -18,7 +18,7 @@ CFLAGS      = -Wall -Wextra -Werror -I.
 NAME      = libft.a
 all:      $(NAME)
 bonus:    $(OBJS) $(BONUSOBJ) $(INCLUDE)
-	    ar rcs $(LIB) $(NAME) $(BONUSOBJ) $(OBJ)
+	    ar rcs $(LIB) $(NAME) $(BONUSOBJ) $(OBJS)
 $(NAME):    $(OBJS)
 		ar rcs $(NAME) $(OBJS)
 clean:
