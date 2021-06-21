@@ -12,98 +12,98 @@
 
 #include "libft.h"
 
-static int	ft_count(const char *str, char c)
+static char	**ft_malloc_error(char **tab)
 {
-	int		num;
-	int		i;
-	bool	word;
+	size_t	i;
 
-	num = 0;
-	word = false;
 	i = 0;
-	while (str[i] != '\0')
+	while (tab[i])
 	{
-		if (str[i] == c)
-		{
-			i++;
-			word = false;
-		}
-		else
-		{	
-			if (!word)
-			{
-				word = true;
-				num++;
-			}
-			i++;
-		}
+		free(tab[i]);
+		i++;
 	}
-	return (num);
-}
-
-static char	*ft_getword(const char *s, char c)
-{
-	size_t	length;
-	char	*str;
-
-	length = 0;
-	while (s[length] != '\0' && s[length] != c)
-		length++;
-	str = ft_substr(s, 0, length);
-	if (str)
-		return (str);
+	free(tab);
 	return (NULL);
 }
 
-static void	ft_skip(char **s, char c)
+static size_t	ft_get_nb_strs(char const *s, char c)
 {
-	while (**s == c)
-		*s += 1;
+	size_t	i;
+	size_t	nb_strs;
+
+	if (!s[0])
+		return (0);
+	i = 0;
+	nb_strs = 0;
+	while (s[i] && s[i] == c)
+		i++;
+	while (s[i])
+	{
+		if (s[i] == c)
+		{
+			nb_strs++;
+			while (s[i] && s[i] == c)
+				i++;
+			continue ;
+		}
+		i++;
+	}
+	if (s[i - 1] != c)
+		nb_strs++;
+	return (nb_strs);
 }
 
-static void	ft_nextword(char **table, char c)
+static void	ft_get_next_str(char **next_str, size_t *next_str_len, char c)
 {
-	char	*str;
-	int		between;
+	size_t	i;
 
-	str = *table;
-	between = 0;
-	while (*str)
+	*next_str += *next_str_len;
+	*next_str_len = 0;
+	i = 0;
+	while (**next_str && **next_str == c)
+		(*next_str)++;
+	while ((*next_str)[i])
 	{
-		if (*str == c)
-			between = 1;
-		else if (*str != c && between == 1)
+		if ((*next_str)[i] == c)
 			return ;
-		*table = *table + 1;
-		str++;
+		(*next_str_len)++;
+		i++;
 	}
+}
+
+char	**ft_fill_tab(size_t nb_strs, char *next_str, char c, char **tab)
+{
+	size_t	i;
+	size_t	next_str_len;
+
+	next_str_len = 0;
+	i = 0;
+	while (i < nb_strs)
+	{
+		ft_get_next_str(&next_str, &next_str_len, c);
+		tab[i] = (char *)malloc(sizeof(char) * (next_str_len + 1));
+		if (!tab[i])
+			return (ft_malloc_error(tab));
+		ft_strlcpy(tab[i], next_str, next_str_len + 1);
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		num;
-	char	**words;
-	char	*aux;
-	int		i;
+	char			**tab;
+	char			*next_str;
+	size_t			nb_strs;
 
-	if (s)
-	{
-		num = ft_count(s, c);
-		words = (char **)malloc(sizeof(char *) * (num + 1));
-		aux = ft_strdup(s);
-		if (words && aux)
-		{
-			i = -1;
-			while (++i < num)
-			{
-				ft_skip(&aux, c);
-				words[i] = ft_getword(aux, c);
-				if (words[i])
-					ft_nextword(&aux, c);
-			}
-			words[i] = NULL;
-			return (words);
-		}
-	}
-	return (NULL);
+	if (!s)
+		return (NULL);
+	nb_strs = ft_get_nb_strs(s, c);
+	tab = (char **)malloc(sizeof(char *) * (nb_strs + 1));
+	if (!tab)
+		return (NULL);
+	next_str = (char *)s;
+	tab = ft_fill_tab(nb_strs, next_str, c, tab);
+	return (tab);
 }
