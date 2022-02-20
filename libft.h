@@ -10,6 +10,20 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct s_double_list
+{
+	void					*content;
+	struct s_double_list	*next;
+	struct s_double_list	*last;
+}	t_double_list;
+
+typedef struct s_deque
+{
+	struct s_double_list	*head;
+	struct s_double_list	*tail;
+	int						size;
+}	t_deque;
+
 int		ft_atoi(const char	*str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
