@@ -54,7 +54,7 @@ void    deque_push_front(t_deque *deque, void *p)
 	
 }
 
-void deque_pop_back(t_deque *deque, void(*f)(void *))
+void	deque_pop_back(t_deque *deque, void(*f)(void *)) //parámetros tipo deque y tipo función void
 {
 	t_double_list	*aux;
 	if (deque->size < 1 || !deque->tail)
@@ -64,6 +64,22 @@ void deque_pop_back(t_deque *deque, void(*f)(void *))
 	deque->tail = deque->tail->last;
 	if (deque->tail)
 		deque->tail->next = NULL;
+	if (f)
+		f(aux->content);
+	free(aux);
+}
+
+void	deque_pop_front(t_deque *deque, void (*f)(void*))
+{
+	t_double_list	*aux;
+
+	if (deque->size < 1 || !deque->head)
+		return;
+	(deque->size)--;
+	aux = deque->head;
+	deque->head = deque->head->next;
+	if (deque->head)
+		deque->head->last = NULL;
 	if (f)
 		f(aux->content);
 	free(aux);

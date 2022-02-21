@@ -67,5 +67,16 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+t_deque *deque_init(void);
+void    deque_push_back(t_deque *deque, void *p);
+void    deque_push_front(t_deque *deque, void *p);
+void	deque_pop_back(t_deque *deque, void(*f)(void *));
+void	deque_pop_front(t_deque *deque, void (*f)(void*));
+int		ft_min(int a, int b);
+int		ft_max(int a, int b);
+int		ft_mcd(int a, int b);
+int		ft_mcm(int a, int b);
+
+
 
 #endif
