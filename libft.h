@@ -76,6 +76,7 @@ int		ft_min(int a, int b);
 int		ft_max(int a, int b);
 int		ft_mcd(int a, int b);
 int		ft_mcm(int a, int b);
+int 	radix_search(int *array, int array_size, int target);
 
 
 

@@ -7,7 +7,7 @@ SRCS      = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 
 BONUSSRC     = ft_lstnew.c \
                 ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
-                ft_lstiter.c ft_lstmap.c deque.c deque_utils.c ft_minmaxmcdmcm.c
+                ft_lstiter.c ft_lstmap.c deque.c deque_utils.c ft_minmaxmcdmcm.c ft_radix.c
 
 OBJS      = $(SRCS:.c=.o)
 INCLUDE = libft.h
