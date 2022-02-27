@@ -13,7 +13,7 @@ t_deque *deque_init(void)
     return(deque);
 }
 
-void    deque_push_back(t_deque *deque, void *p)
+void    deque_push_stern(t_deque *deque, void *p)
 {
     t_double_list   *aux;
 
@@ -34,7 +34,7 @@ void    deque_push_back(t_deque *deque, void *p)
     deque->tail = deque->tail->next; //deque tail igual al next (aux)
 }
 
-void    deque_push_front(t_deque *deque, void *p)
+void    deque_push_bow(t_deque *deque, void *p)
 {
 	t_double_list *aux;
 
@@ -54,7 +54,7 @@ void    deque_push_front(t_deque *deque, void *p)
 	
 }
 
-void	deque_pop_back(t_deque *deque, void(*f)(void *)) //parámetros tipo deque y tipo función void
+void	deque_pop_stern(t_deque *deque, void(*f)(void *)) //parámetros tipo deque y tipo función void
 {
 	t_double_list	*aux;
 	if (deque->size < 1 || !deque->tail)
@@ -69,7 +69,7 @@ void	deque_pop_back(t_deque *deque, void(*f)(void *)) //parámetros tipo deque y
 	free(aux);
 }
 
-void	deque_pop_front(t_deque *deque, void (*f)(void*))
+void	deque_pop_bow(t_deque *deque, void (*f)(void*))
 {
 	t_double_list	*aux;
 
